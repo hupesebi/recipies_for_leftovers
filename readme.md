@@ -6,5 +6,5 @@ The app uses the Spoonacular API:
 https://spoonacular.com/food-api 
 
 ### 2. Database schema:
-![](../QuickDBD-export.png)
+![](QuickDBD-export.png)
 
