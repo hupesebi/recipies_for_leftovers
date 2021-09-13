@@ -16,13 +16,10 @@ CURR_USER_KEY = "curr_user"
 
 # Get DB_URI from environ variable or,
 # if not set there, use development local db.
-ENV = 'dev'
-if ENV == 'dev':
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///leftoverrecipe'))
-else:
-    app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///leftoverrecipe'))
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///leftoverrecipe'))
+
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
@@ -207,7 +204,7 @@ def search_recipe():
             total_results = 0
         if g.user: 
             user = User.query.get_or_404(g.user.id)
-            return render_template('recipe_search.html', form = form, recipe_result_list = recipe_result_list, total_results = total_results, include_ingredients = include_ingredients, new_ingredients = new_ingredients, user = user ) 
+            return render_template('recipe_search.html', form = form, recipe_result_list = recipe_result_list, total_results = total_results, include_ingredients = include_ingredients, new_ingredients = new_ingredients, user =user ) 
 
         else:    
             return render_template('recipe_search.html', form = form, recipe_result_list = recipe_result_list, total_results = total_results, include_ingredients = include_ingredients, new_ingredients = new_ingredients )
