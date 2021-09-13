@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingredient Inventory{% endblock %}
+
+{% block content %}
+<body id="ingred-bg">
+<div class="explanatory-header-text">
+    <h2>Ingredient Inventory</h2><br>
+    <h5>Add Ingredient</h5>
+    <form action="/add_ingred" method="POST" id="add-ingred">
+      <input class="col-2" type="text" name="ingredient" id="ingredient">
+      <input class="btn btn-primary btn-sm" type="submit" value="Add">
+    </form>
+      
+</div>
+<div id="alert-area"></div>
+
+<div id="user-ingredient-list">
+    
+    {% if user.ingredients %}
+        
+        <div class="ingred-div">
+            <h3 id="ingred-header">Ingredients</h3>
+            <ul class="ingredient-box" id="ingred-list">
+            {% for ingredient in user.ingredients %}
+                <li class="row ingred-row">
+                    <span class="ingredient col-sm-8"> 
+                        {{ ingredient.ingred_name.title() }} 
+                    </span>
+                    <div class="del-button-td col-sm-2">
+                        <button class="delete-button btn btn-outline-secondary btn-sm ingred-del-buttons" name="ingredient" value="{{ ingredient.ingred_id }}">&times;</button>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    
+
+    {% endif %}
+
+</div>
+
+
+
+
+
+
+<script src="/static/user_ingred.js"></script>
+
+
+{% endblock %}

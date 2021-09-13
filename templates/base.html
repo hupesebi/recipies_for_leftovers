@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title> {% block title %} title {% endblock %}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Alice|Amaranth:400,700|Hind|Kaushan+Script" rel="stylesheet">
+</head>
+
+<body>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+
+
+
+  <nav class="navbar sticky-top navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/users/{{session['user_id']}}">
+    <img src="/static/images/zero_waste.jpeg" width="30" height="30" class="d-inline-block align-top" alt=""><span class="recipies">
+    Leftovers</span><span> recipe</span> </a>
+    <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/search-recipe">Search Recipe</a>
+            </li>
+            {% if g.user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/ingred/{{g.user.id}}">Ingredient Inventory</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/recipes/{{g.user.id}}">Recipe Box</a>
+                </li>
+                
+                </ul>
+                <span class="navbar-text align-self-end">
+                    <a href="/dashboard/" class="sign-in">Profile</a>
+                </span>
+                <span class="navbar-text">
+                    <a href="/logout" class="log-out">Log Out</a>
+                </span>
+            {% else %}
+                <span class="navbar-text align-self-end">
+                    <a href="/signin" class="sign-in">Register</a>
+                </span>
+                <span class="navbar-text align-self-end">
+                    <a href="/login" class="sign-in">Log In</a>
+                </span>
+          
+            {% endif %}
+    </div>
+</nav>
+
+
+
+ <!-- Show flashed messages -->
+ <div class="container">
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ category }} text-center">{{ message }}</div>
+    {% endfor %}
+
+<div class="container"> 
+    {% block content %} put your content here {% endblock %}
+</div>
+
+
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>

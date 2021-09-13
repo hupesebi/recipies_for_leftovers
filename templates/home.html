@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Leftovers recipe{% endblock %}
+
+{% block content %}
+
+<div>Let warm up with a joke: {{joke}}</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-3">
+      <h1 id="chef-box"><span class="recipies">Recipies</span><span> for leftovers</span></h1>
+    </div>
+  </div>
+  <!-- <img src="/static/avocado.svg" width="43" height="43"> -->
+  <div id="sign-up">
+  <form action="/register" method="POST">
+      <div>
+        <div class="form-group row">
+        <input type="text" class="form-control col-sm-4" name="firstname" id="firstname" placeholder="First">&nbsp;
+        <input type="text" class="form-control col-sm-4" name="lastname" id="lastname" placeholder="Last">&nbsp;
+      </div>
+      <div class="form-group row">
+        <input type="email" class="form-control col-sm-8" name="email" id="email" required="required" placeholder="Email">&nbsp;<br>
+      </div>
+      <div class="form-group row">
+        <input type="password" class="form-control col-sm-4" name="password" id="register-password" required="required" placeholder="Password">&nbsp;
+        <input type="password" class="form-control col-sm-4" name="confirm-password" id="confirm-password" required="required" placeholder="Confirm">
+        <br>
+        <span id='message'></span><br>
+      </div>
+      <div class="form-group row">
+        <input type="submit" id="signup-submit" name="submit" class="btn btn-primary" value="Register">
+      </div>
+  
+  
+  </form>
+  </div>
+
+{% endblock %}

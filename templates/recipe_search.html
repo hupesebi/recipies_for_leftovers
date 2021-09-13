@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipe Results{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+      <h2 class="join-message">What do you want to cook today</h2>
+      <form method="POST" action="/search-recipe">
+        {% include 'form.html'%}
+        {% if user is defined %}
+        {% if user.ingredients %}
+        <p>Include Ingredients from Inventory:</p>
+        <ul id="ingred-list">
+          {% for ingredient in user.ingredients %}
+              <li class="search-checkbox"><input type="checkbox" class="custom-checkbox" name="stored_ingredients" value="{{ ingredient.ingred_name }}" checked> {{ ingredient.ingred_name.title() }}</li>
+          {% endfor %}
+        </ul>
+
+      {% endif %}
+      {% endif %}
+        
+          <button type="submit"class="btn btn-primary btn-lg btn-block">Search recipe</button>
+      </form>
+    </div>
+  </div>
+
+{% if recipe_result_list %}
+{% for x in include_ingredient%}
+<ul>
+<li> {{ x }}</li>
+</ul>
+{% endfor %}
+<div class="explanatory-header-text">
+    <h2>Recipe Results</h2>
+</div>
+<div class="explanatory-header-text">
+    
+      <p>Save a recipe to import it into your recipe box. </p>
+</div>
+    <div class="card-columns">
+      {% for recipe in recipe_result_list %}
+        <div class="card">
+          <div class="card-block">
+            <h4 class="card-title">{{ recipe[1].title() }}</h4>
+            <p class="card-text">
+              via {% if recipe[3] and recipe[2] %}<a href="{{ recipe[3]}}" target="_blank" class="card-link"> {{ recipe[2] }} </a> 
+                        {% elif recipe[3] %}
+                          <a href="{{ recipe[3]}}" target="_blank" class="card-link"> [Original Source] </a> 
+                        {% else %} 
+                          {{ recipe[2] }}
+                        {% endif %}
+            </p>
+          </div>
+          <img class="card-img-top img-fluid" src="{{ recipe[4] }}" alt="Card image cap">
+          <div class="card-block">
+            <h5>Ingredients</h5>
+            <ul>
+              {% for ingredient in recipe[6] %}
+                <li>{{ ingredient }}</li>
+              {% endfor %}
+            </ul>
+            <button type="button" class="instructions-button btn btn-outline-info">View Instructions</button><br>
+            <ol class="recipe-instructions">
+              {% for instruction in recipe[5] %}
+                  <li>{{ instruction }}</li>
+              {% endfor %}
+            </ol>
+          </div>
+          <div class="card-footer">
+            <form action="/add_recipe" method="POST">
+              <button type="submit" class="add-recipe btn btn-primary" name="recipe_id" value="{{ recipe[0] }}">Save Recipe</button>
+            </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  {% endif %}
+  
+
+<script src="/static/recipe.js"></script>
+
+
+{% endblock %}

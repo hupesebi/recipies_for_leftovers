@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipe Box{% endblock %}
+
+{% block content %}
+<div class="explanatory-header-text">
+    <h2>Recipe Box</h2>
+
+</div>
+    {% if user.recipes %}
+        {% if recipes_list %}
+        <div class="card-columns">
+          {% for recipe in recipes_list %}
+          <div class="card">
+          <div class="card-block">  
+            <h4 class="card-title">{{ recipe.title.title() }}</h4>
+            <p class="card-text">
+              via {% if recipe.url and recipe.source_name %}<a href="{{ recipe.url}}" target="_blank" class="card-link"> {{ recipe.source_name }} </a> 
+                        {% elif recipe.url %}
+                          <a href="{{ recipe.url }}" target="_blank" class="card-link"> [Original Source] </a> 
+                        {% else %} 
+                          {{ recipe.source_name }}
+                        {% endif %}
+            </p>
+          </div>
+          <img class="card-img-top img-fluid" src="{{ recipe.image }}">
+          <div class="card-block">
+            <h5>Ingredients</h5>
+            <ul>
+              {% for ingredient in recipe.ingredient_info %}
+                <li>{{ ingredient.ingred_info }}</li>
+              {% endfor %}
+            </ul>
+            <button type="button" class="instructions-button btn btn-outline-info">View Instructions</button><br>
+            {% set instruction_list = recipe.instructions[2:-2].split("\",\"") %}
+            <ol class="recipe-instructions">
+            {% for instruction in instruction_list %}
+              <li>{{ instruction }}</li>
+            {% endfor %}
+            </ol>
+          </div>
+          <div class="card-footer button-align">
+            <form action="/del_recipe" method="POST" class="form-align">
+              <button type="submit" class="del-recipe btn btn-outline-secondary button-to-align" name="recipe_id" value="{{ recipe.recipe_id }}">Remove</button>
+            </form>
+          </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}  
+        <p>There are currently no recipes saved in your recipe box.</p>
+      {% endif%}
+
+    {% else %}
+      <p>There are currently no recipes saved in your recipe box.</p>
+
+    {% endif %}
+
+
+
+
+<script src="/static/user_recipes.js"></script>
+
+
+{% endblock %}
