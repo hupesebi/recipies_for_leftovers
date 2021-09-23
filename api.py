@@ -2,10 +2,10 @@ import requests
 import os
 
 
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
-# KEY = os.getenv('API_KEY')
+KEY = os.getenv('API_KEY')
 
 
 # Includes API calls and corresponding functions
@@ -14,7 +14,7 @@ import os
 url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
 headers = {
   'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-  'x-rapidapi-key': '87541dcc8cmsh9ece6037bab4ae9p1e3084jsn582fd41df115',
+  'x-rapidapi-key': KEY,
   }
 
 #####SPOONACULAR ENDPOINTS - all GET requests

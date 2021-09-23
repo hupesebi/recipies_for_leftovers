@@ -1,28 +1,18 @@
 from unittest import TestCase
 import os
-import flask.globals
 from app import app, CURR_USER_KEY
-from models import User, db, Recipe, UserRecipe, connect_db
-from flask import session, g
-from flask_bcrypt import Bcrypt
+from models import Ingredient, User, db, Recipe, UserRecipe, connect_db
+from flask import session
 
-bcrypt = Bcrypt()
 
 # Use test database and don't clutter tests with SQL
 os.environ['DATABASE_URL'] = "postgresql:///recipe_test"
-app.config['SQLALCHEMY_ECHO'] = False
+# app.config['SQLALCHEMY_ECHO'] = False
 
-# Make Flask errors be real errors, rather than HTML pages with error info
 app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False
 
-
-    # thai_shrimp_pasta_id = Recipe.query.filter(Recipe.url=="http://www.tasteofhome.com/Recipes/thai-shrimp-pasta").first().recipe_id
-    # sebastian_id = User.query.filter(User.email=='sebastian@gmail.com').first().user_id
-
-    # sebastian_thai_pasta = UserRecipe(recipe_id=thai_shrimp_pasta_id, user_id=sebastian_id, cooked=False)
-    # db.session.add(sebastian_thai_pasta)
-
+db.create_all()
 
 
 
@@ -47,36 +37,33 @@ class TestsLogInLogOut(TestCase):
 
     def setUp(self):
         """Stuff to do before every test."""
-
+        # db.drop_all()
         # Get the Flask test client
         self.client = app.test_client()
         app.config['TESTING'] = True
+        db.drop_all()
+        db.create_all()
 
      
         sebastian = User(firstname='Sebastian', lastname='Maier', email='sebastian@gmail.com', password='test')
-        thai_shrimp_pasta = Recipe(title="Thai Shrimp Pasta", 
-                            source_name="Taste of Home", 
-                            url="http://www.tasteofhome.com/Recipes/thai-shrimp-pasta", 
-                            instructions='{"Soak noodles according to package directions. Meanwhile, in a large dry skillet over medium heat, toast curry powder until aromatic, about 1-2 minutes. Stir in the coconut milk, shrimp, salt and pepper. Bring to a boil. Reduce heat; simmer, uncovered, for 5-6 minutes or until shrimp turn pink.","Drain noodles; add to pan. Stir in cilantro; heat through.","Serve with lime wedges if desired."}',
-                            image="https://spoonacular.com/recipeImages/Thai-Shrimp-Pasta-421073.jpg")
 
         # Create tables and add sample data
         db.session.add(sebastian)
-        db.session.add(thai_shrimp_pasta)
-        db.create_all()
+        db.session.commit()
+        
   
 
-    def tearDown(self):
-        """Do at end of every test."""
+    # def tearDown(self):
+    #     """Do at end of every test."""
 
-        db.session.close()
-        db.drop_all()
+    #     db.session.close()
+    #     db.drop_all()
     
 
     def test_login(self):
         """Test log in."""
+        
 
-        user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
 
         with self.client as c:
             result = c.post('/login',
@@ -84,6 +71,7 @@ class TestsLogInLogOut(TestCase):
                             follow_redirects=True
                             )
             self.assertIn(b"Welcome back", result.data)
+           
 
     def test_logout(self):
         """Test logout."""
@@ -91,11 +79,11 @@ class TestsLogInLogOut(TestCase):
 
         with self.client as c:
             with c.session_transaction() as sess:
-                sess['user_id'] = user.id
+                sess[CURR_USER_KEY] = user.id
 
             result = self.client.get('/logout', follow_redirects=True)
 
-            
+            self.assertNotIn('user.id', sess)
             self.assertIn(b'Welcome to leftover recipes', result.data)
 
 
@@ -106,24 +94,34 @@ class TestUserIngredRecipeBoard(TestCase):
         """Stuff to do before every test."""
 
         self.client = app.test_client()
+        db.drop_all()
+        db.create_all()     
+
+        Sebastian = User(firstname='Sebastian', lastname='Maier',
+                                    email="sebastian@gmail.com",
+                                    password="test")
       
         thai_shrimp_pasta = Recipe(title="Thai Shrimp Pasta", 
                             source_name="Taste of Home", 
                             url="http://www.tasteofhome.com/Recipes/thai-shrimp-pasta", 
                             instructions='{"Soak noodles according to package directions. Meanwhile, in a large dry skillet over medium heat, toast curry powder until aromatic, about 1-2 minutes. Stir in the coconut milk, shrimp, salt and pepper. Bring to a boil. Reduce heat; simmer, uncovered, for 5-6 minutes or until shrimp turn pink.","Drain noodles; add to pan. Stir in cilantro; heat through.","Serve with lime wedges if desired."}',
                             image="https://spoonacular.com/recipeImages/Thai-Shrimp-Pasta-421073.jpg")
+        
 
         # Create tables and add sample data
-    
+        db.session.add(Sebastian)
         db.session.add(thai_shrimp_pasta)
-        db.create_all()
-        self.testuser = User.signup(firstname='Sebastian', lastname='Maier',
-                                    email="sebastian@gmail.com",
-                                    password="test")
-        self.testuser_id = 8989
-        self.testuser.id = self.testuser_id
+        db.session.commit()
+        # thai_shrimp_pasta = Recipe.query.first()
+        # thai_shrimp_pasta_id = thai_shrimp_pasta.id
+        # user = User.query.first()
+        # user_id = user.id
 
-        
+        # Sebastian_thai_pasta = UserRecipe(recipe_id=thai_shrimp_pasta_id, user_id=user_id)
+        # db.session.add(Sebastian_thai_pasta)
+
+    
+        # db.session.commit()           
         
        
 
@@ -131,75 +129,74 @@ class TestUserIngredRecipeBoard(TestCase):
         """Do at end of every test."""
 
         db.session.close()
-        db.drop_all()
+        # db.drop_all()
     
    
 
     def test_dashboard(self):
         """Test user's dashboard"""
         user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
-        firstname = user.firstname
+        
         
         
 
         with self.client as c:
             with c.session_transaction() as sess:
-                sess[CURR_USER_KEY] = self.testuser.id
+                sess[CURR_USER_KEY] = user.id
                 
-            result = c.get('/dashboard/',
+            result = c.get('/dashboard',
                             follow_redirects=True
                             )
 
             self.assertIn(b"Hello", result.data)
-            self.assertIn(firstname, result.data)
+            self.assertIn(b"Sebastian", result.data)
 
-#     def test_unauthorized_user(self):
-#         """Test case of unathorized user trying to access dashboard"""
-#         user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
+    def test_unauthorized_user(self):
+        """Test case of unathorized user trying to access dashboard"""
+        user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
       
 
-#         with self.client as c:
-#             with c.session_transaction() as sess:
-#                 sess['user_id'] = user.id
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = 2345
 
-#             result = c.get('/users/'+str(2),
-#                             follow_redirects=True
-#                             )
+            result = c.get('/dashboard',
+                            follow_redirects=True
+                            )
 
-#             self.assertIn(b"You are not authorized to view this profile", result.data)
+            self.assertIn(b"You are not authorized", result.data)
 
 
-    # def test_ingred(self):
-    #     """Test user's Ingredient Inventory"""
-    #     user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
-    #     user_id = user.id
+    def test_ingred(self):
+        """Test user's Ingredient Inventory"""
+        user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
+       
       
 
-    #     with self.client as c:
-    #         with c.session_transaction() as sess:
-    #             sess['user_id'] = user.id
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = user.id
 
-    #         result = c.get('/ingred/'+str(user_id),
-    #                         follow_redirects=True
-    #                         )
+            result = c.get('/ingred/'+str(user.id),
+                            follow_redirects=True
+                            )
 
-    #         self.assertIn(b"Add Ingredient", result.data)
+            self.assertIn(b"Add Ingredient", result.data)
 
 
-    # def test_recipes(self):
-    #     """Test user's Recipe Box"""
-    #     user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
-    #     user_id = user.id
+    def test_recipes(self):
+        """Test user's Recipe Box"""
+        user = db.session.query(User).filter(User.email=='sebastian@gmail.com').one()
 
-    #     with self.client as c:
-    #         with c.session_transaction() as sess:
-    #             sess['user_id'] = user.id
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = user.id
 
-    #         result = c.get('/recipes/'+str(user_id),
-    #                         follow_redirects=True
-    #                         )
+            result = c.get('/recipes/'+str(user.id),
+                            follow_redirects=True
+                            )
 
-    #         self.assertIn(b"Recipe Box", result.data)
+            self.assertIn(b"There are currently no recipes saved in your recipe box.", result.data)
 
 
 
