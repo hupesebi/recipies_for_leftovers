@@ -1,10 +1,12 @@
 import requests
 import os
+from boto.s3.connection import S3Connection
+
 # from dotenv import load_dotenv
 # load_dotenv()
 
 # KEY = os.getenv('API_KEY')
-KEY= os.environ.get('SECRET_KEY')
+KEY= S3Connection(os.environ['SECRET_KEY'])
 
 # Includes API calls and corresponding functions
 
