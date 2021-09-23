@@ -1,9 +1,10 @@
 import requests
 import os
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
-KEY = os.getenv('API_KEY')
+# KEY = os.getenv('API_KEY')
+KEY= os.environ.get('SECRET_KEY')
 
 # Includes API calls and corresponding functions
 
