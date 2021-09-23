@@ -5,7 +5,7 @@
     let ingredientName = result.ingredient;
     if (ingredientName) {
       let ingredID = result.ingred_id;
-      console.log(ingredID);
+    //   console.log(ingredID);
       ingredList[0].innerHTML = ingredList.html() + '<li class="row ingred-row"><span class="ingredient col-sm-8"> '+ingredientName.charAt(0).toUpperCase()+ingredientName.slice(1)+
       '</span><div class="del-button-td col-sm-2"><button class="delete-button btn btn-outline-secondary btn-sm ingred-del-buttons" name="ingredient" value="'+ingredID+'">&times;</button>'+
       '</div></li>';

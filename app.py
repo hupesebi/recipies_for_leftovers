@@ -8,7 +8,7 @@ import json
 from werkzeug import datastructures
 from models import db, connect_db, User, UserRecipe, Recipe
 from forms import UserAddForm, LoginForm, RecipeSearchForm, UserEditForm
-from api import get_random_joke, get_recipe_request, get_recipe_info
+from api import  get_recipe_request, get_recipe_info, get_random_food_trivia
 from functions import add_ingredient, delete_ingredient, add_new_recipe, delete_recipe
 app = Flask(__name__)
 
@@ -17,8 +17,8 @@ CURR_USER_KEY = "curr_user"
 # Get DB_URI from environ variable or,
 # if not set there, use development local db.
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(('DATABASE_URL'.replace("://", "ql://", 1)), 'postgresql:///leftoverrecipe')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(('DATABASE_URL'.replace("://", "ql://", 1)), 'postgresql:///leftoverrecipe')
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -161,8 +161,8 @@ def profile():
 @app.route('/')
 def search_page():
     """Return home page with random joke"""
-    joke_response = get_random_joke()
-    return render_template('home.html', joke=joke_response)
+    food_trivia_response = get_random_food_trivia()
+    return render_template('home.html', food_trivia=food_trivia_response)
 
 
 @app.route('/search-recipe', methods = ['GET', 'POST'])
@@ -308,12 +308,4 @@ def show_user_info(user_id):
 
 
 
-@app.after_request
-def add_header(req):
-    """Add non-caching headers on every request."""
 
-    req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    req.headers["Pragma"] = "no-cache"
-    req.headers["Expires"] = "0"
-    req.headers['Cache-Control'] = 'public, max-age=0'
-    return req

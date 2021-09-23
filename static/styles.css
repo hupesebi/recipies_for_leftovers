@@ -1,0 +1,378 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.white{
+    color: #fff !important;;
+}
+
+.box {
+    /*font-family: 'Amaranth', sans-serif;*/
+    font-family: 'Alice', serif;
+
+}
+
+.navbar-green{
+    background-color: #585900;
+}
+
+a.nav-link{
+    color:#fff !important;
+}
+
+a.navbar-brand{
+    color:#fff !important;
+}
+
+.recipies{
+    font-family: 'Alice', serif;
+    margin-left: 2%;
+    font-size: 2.5rem;
+}
+
+.recipe-instructions{
+    display: none;
+}
+
+a, a:link, a:hover, a:active, a:visited {
+    color: #425460;
+}
+
+h1{
+    font-size: 3.5rem;
+}
+
+.btn {
+    font-family: 'Hind', sans-serif;
+
+}
+
+.btn-primary {
+    background-color: #585900;
+    border: none;
+    
+}
+
+.btn-primary:hover {
+    background-color: #7D8000;
+    border: none;
+    cursor: pointer;
+    
+}
+
+.btn-outline-info, .btn-outline-info:visited {
+    border-color: #88B04B;
+    color: #88B04B;
+
+}
+
+.btn-outline-info:hover,
+.btn-outline-info:active,
+.btn-outline-info:focus {
+    background-color: #88B04B;
+    border-color: #88B04B;
+    color: white;
+    cursor: pointer;
+}
+
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus, 
+.btn-outline-primary:hover, 
+.btn-outline-primary:active, 
+.btn-outline-primary:focus {
+    background-color: #425460;
+    border-color: #425460;
+    color: white;
+    cursor: pointer;
+}
+
+
+.delete-button {
+    color: #4D0604;
+    border: #4D0604 solid 1px;
+}
+
+.delete-button:hover {
+    color: #fff;
+    background-color: #99130F;
+    border: #4D0604 solid 1px;
+    cursor: pointer;
+}
+
+
+body {
+    font-family: 'Hind', sans-serif;
+
+}
+
+h2 {
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Alice', serif;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 10px;
+    font-family: 'Alice', serif;
+
+}
+
+#log-in {
+    float: right;
+    padding: .5rem 1rem;
+
+}
+
+a.log-out {
+    color: #fff
+}
+
+a.sign-in {
+    color: #fff
+}
+
+#sign-up {
+    padding-top: 1%;
+    padding-left: 67%;
+
+}
+
+#homepage-bg {
+    background-image:linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%,rgba(180, 197, 106, 0.3) 100%), url("/static/images/home-bg.jpg");
+    background-size: cover;
+    background-color: #585900;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.body-home{
+    position: relative;
+}
+
+.home-positioning{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+  }
+
+#signup-submit {
+    margin-left: 250px;
+    background-color: #88B04B;
+    border: none;
+}
+
+#signup-submit:hover {
+    background-color: #6A6A6A;
+    border: none; 
+
+}
+
+#dashboard-bg {
+    background-image:linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.3) 100%),url("/static/images/waffles.jpg");
+    background-size: 100%;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+
+
+a#search-recipe-dashboard {
+    color: #664823;
+    text-decoration: none;
+}
+
+a.card-link {
+    color: #664823;
+    text-decoration: none;
+
+}
+
+
+input{
+    font-family: 'Hind', sans-serif;
+}
+
+input[type="text"]:focus, input[type="text"]:active {
+        -webkit-box-shadow: none;
+        outline: -webkit-focus-ring-color auto 0px;
+
+}
+
+
+.custom-checkbox:checked {
+
+    background: #6A6A6A;
+  
+    }
+
+#food-fact {
+    text-align: center;
+}
+
+#dashboard-content {
+    padding: 60px;
+
+}
+
+#ingred-bg {
+    background-image:linear-gradient(to bottom, rgba(255,255,255,0.6) 100%, rgba(255,255,255,0.6) 100%), url("/static/images/ingred-bg.jpg");
+    background-size: cover;
+    background-color: #F6F7F9;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+#user-ingredient-list {
+    width: 100%;
+    margin-top: 30px;
+}
+
+#ingred-header {
+    text-align: center;
+    /*display: block;*/
+
+}
+.ingred-div {
+    width: 30%;
+    margin: 0 auto;
+   
+}
+
+.ingred-row {
+    margin-left: -30px;
+}
+
+.ingredient-box {
+     border: 1px solid;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     /*padding-right: 25px;*/
+
+}
+
+.ingredient-box li {
+    padding: 5px 0 0 0px;
+    /*background: #ffffff;*/
+
+}
+
+
+.delete-button {
+    margin-left: 30px;
+}
+
+
+
+#search-bg {
+    background-image:linear-gradient(to bottom, rgba(255,255,255,0.6) 100%, rgba(255,255,255,0.6) 100%), url("/static/images/search-bg.jpg");
+    background-size: cover;
+    background-color: #f5f5f5;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+#search-form-query {
+    position: relative;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    width: 30%;
+    border: 1px solid;
+    margin-left: 35%;
+    margin-bottom: 50px;
+}
+
+
+
+
+
+#alert-area {
+    width: 30%;
+    margin: 0 auto;
+ 
+   
+}
+
+#search-alerts {
+    width: 30%;
+
+}
+
+#search-button-div {
+    margin-left: 33%;
+
+}
+
+.alert {
+text-align: center;
+}
+
+.end-results {
+    display: none;
+    text-align: center;
+}
+
+
+
+
+.del-recipe {
+    display: inline;
+    float: right;
+}
+
+
+.search-checkbox {
+    list-style:none;
+}
+
+
+.explanatory-header-text {
+    padding: .5rem 1rem;
+    text-align: center;
+}
+
+
+.div-to-center {
+    margin: 0 auto;
+
+}
+
+
+.button-align {
+
+    width:100%;
+}
+
+.button-to-align {
+    display: inline-block;
+}
+
+
+.form-align {
+    display: inline;
+}
+
+.add-recipe {
+    display: block;
+    margin: 0 auto;
+}
+
+.search-footnote {
+    font-size: .75em;
+}

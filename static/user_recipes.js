@@ -23,20 +23,20 @@ $.post("/del_recipe", formInputs, function(){
 
 $(".del-recipe").on('click', deleteRecipe);
 
-$(".recipe-instructions").hide()
+
+
 //Display instructions on click 
 $(".instructions-button").on("click", function(){
-let thisButton = this;
-let instructions = $(thisButton).siblings("ol.recipe-instructions");
-$(instructions).toggle();
+    let thisButton = this;
+    let instructions = $(thisButton).siblings("ol.recipe-instructions");
+    $(instructions).toggle();
 
-if ($(thisButton).text()=="View Instructions") {
-    instructions.show()
+    if ($(thisButton).text()=="View Instructions") {
     $(thisButton).text("Hide Instructions");
-}
-else {
-    $(thisButton).text("View Instructions");
-}
+    }
+    else {
+      $(thisButton).text("View Instructions");
+    }
 
-});
+    });
 

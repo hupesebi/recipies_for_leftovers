@@ -1,5 +1,9 @@
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
+KEY = os.getenv('API_KEY')
 
 # Includes API calls and corresponding functions
 
@@ -7,7 +11,7 @@ import requests
 url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
 headers = {
   'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-  'x-rapidapi-key': "87541dcc8cmsh9ece6037bab4ae9p1e3084jsn582fd41df115",
+  'x-rapidapi-key': KEY,
   }
 
 #####SPOONACULAR ENDPOINTS - all GET requests
@@ -18,10 +22,13 @@ auto_complete_ingred = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.
 random_food_trivia = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/trivia/random"
 random_joke = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/jokes/random"
 
-def get_random_joke():
-    joke = requests.get(random_joke, headers=headers)
-    result= joke.json()['text']
-    return result
+def get_random_food_trivia():
+    """Get random food trivia from API"""
+
+    food_trivia = requests.get(random_food_trivia, headers=headers)
+    food_trivia = food_trivia.json()['text']
+
+    return food_trivia
 
 def get_recipe_api(include_ingredients, diet, intolerances, offset, query, number):
     """Make GET request to API for recipe searches"""

@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Recipe Results{% endblock %}
+{% block title %}Search Recipes{% endblock %}
 
 {% block content %}
+<body id="search-bg">
+  <div class="explanatory-header-text">
+      <h2>Search for Recipes</h2>
+  </div>
 
 <div class="row justify-content-md-center">
     <div class="col-md-7 col-lg-5">
-      <h2 class="join-message">What do you want to cook today</h2>
       <form method="POST" action="/search-recipe">
         {% include 'form.html'%}
         {% if user is defined %}
@@ -78,9 +81,9 @@
     </div>
 
   {% endif %}
-  
+  </body>
 
-<script src="/static/recipe.js"></script>
+
 
 
 {% endblock %}

@@ -172,8 +172,16 @@ class Review(db.Model):
                                                        self.recipe_id, self.user_id)
 
 
+
+
+
+
+
 def connect_db(app):
     """Connect this database to provided Flask app."""
 
     db.app = app
     db.init_app(app)
+
+
+

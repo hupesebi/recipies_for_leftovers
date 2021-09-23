@@ -17,19 +17,17 @@
   
   //Display instructions on click 
   $(".card-columns").on('click', ".instructions-button", function(){
-    let thisButton = this;
-    let instructions = $(thisButton).siblings("ol.recipe-instructions");
-    
+    var thisButton = this;
+    var instructions = $(thisButton)("ol.recipe-instructions");
   
     $(instructions).toggle();
   
     if ($(thisButton).text()=="View Instructions") {
-      instructions.show()
       $(thisButton).text("Hide Instructions");
+      instructions.css('display', 'block !important')
     }
     else {
       $(thisButton).text("View Instructions");
-      instructions.hide()
     }
   
     });
