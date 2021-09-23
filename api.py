@@ -1,12 +1,12 @@
 import requests
 import os
-from boto.s3.connection import S3Connection
+
 
 # from dotenv import load_dotenv
 # load_dotenv()
 
 # KEY = os.getenv('API_KEY')
-KEY= S3Connection(os.environ['SECRET_KEY'])
+
 
 # Includes API calls and corresponding functions
 
@@ -14,7 +14,7 @@ KEY= S3Connection(os.environ['SECRET_KEY'])
 url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
 headers = {
   'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-  'x-rapidapi-key': KEY,
+  'x-rapidapi-key': '87541dcc8cmsh9ece6037bab4ae9p1e3084jsn582fd41df115',
   }
 
 #####SPOONACULAR ENDPOINTS - all GET requests
