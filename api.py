@@ -10,7 +10,7 @@ KEY= S3Connection(os.environ['SECRET_KEY'])
 
 # Includes API calls and corresponding functions
 
-# Setting up authentication for API
+# Setting up authentication for API d
 url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
 headers = {
   'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
