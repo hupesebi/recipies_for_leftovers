@@ -139,7 +139,6 @@ class UserRecipe(db.Model):
     user_recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True) 
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    cooked = db.Column(db.Boolean)
 
 
     def __repr__(self):

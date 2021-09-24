@@ -1,7 +1,7 @@
 from unittest import TestCase
 import os
 from app import app, CURR_USER_KEY
-from models import Ingredient, User, db, Recipe, UserRecipe, connect_db
+from models import Ingredient, User, UserIngredient, db, Recipe, UserRecipe, connect_db
 from flask import session
 
 
@@ -106,22 +106,27 @@ class TestUserIngredRecipeBoard(TestCase):
                             url="http://www.tasteofhome.com/Recipes/thai-shrimp-pasta", 
                             instructions='{"Soak noodles according to package directions. Meanwhile, in a large dry skillet over medium heat, toast curry powder until aromatic, about 1-2 minutes. Stir in the coconut milk, shrimp, salt and pepper. Bring to a boil. Reduce heat; simmer, uncovered, for 5-6 minutes or until shrimp turn pink.","Drain noodles; add to pan. Stir in cilantro; heat through.","Serve with lime wedges if desired."}',
                             image="https://spoonacular.com/recipeImages/Thai-Shrimp-Pasta-421073.jpg")
-        
+        ingredient = Ingredient(ingred_name="Tomato")
 
         # Create tables and add sample data
         db.session.add(Sebastian)
+        db.session.add(ingredient)
         db.session.add(thai_shrimp_pasta)
-        db.session.commit()
-        # thai_shrimp_pasta = Recipe.query.first()
-        # thai_shrimp_pasta_id = thai_shrimp_pasta.id
-        # user = User.query.first()
-        # user_id = user.id
+        db.session.flush()
+        ing = Ingredient.query.first()
+        ing_id = ing.ingred_id
+        user = User.query.first()
+        user_id = user.id
 
-        # Sebastian_thai_pasta = UserRecipe(recipe_id=thai_shrimp_pasta_id, user_id=user_id)
-        # db.session.add(Sebastian_thai_pasta)
-
+        rec = Recipe.query.first()
+        rec_id = rec.recipe_id
+        user_ing = UserIngredient(ingred_id=ing_id, user_id=user_id)
+        user_rec = UserRecipe ( recipe_id = rec_id, user_id=user_id)
+        db.session.add(user_ing)
+        db.session.add(user_rec)
     
-        # db.session.commit()           
+    
+        db.session.commit()           
         
        
 
@@ -181,7 +186,7 @@ class TestUserIngredRecipeBoard(TestCase):
                             follow_redirects=True
                             )
 
-            self.assertIn(b"Add Ingredient", result.data)
+            self.assertIn(b"Tomato", result.data)
 
 
     def test_recipes(self):
@@ -196,7 +201,7 @@ class TestUserIngredRecipeBoard(TestCase):
                             follow_redirects=True
                             )
 
-            self.assertIn(b"There are currently no recipes saved in your recipe box.", result.data)
+            self.assertIn(b"Thai Shrimp Pasta", result.data)
 
 
 
